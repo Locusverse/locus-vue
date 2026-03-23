@@ -17,7 +17,11 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^1.0.6",
+    "@tailwindcss/vite": "^4.2.2",
     "pinia": "^3.0.4",
+    "tailwindcss": "^4.2.2",
     "vue": "^3.5.30",
     "vue-router": "^5.0.3"
   },

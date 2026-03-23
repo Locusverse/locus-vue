@@ -45,3 +45,6 @@ playwright-report/
 .env.local
 .env.*.local
 
+# Markdown docs (kept local only)
+*.md
+

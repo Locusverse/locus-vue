@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://locusverse.com/sitemap.xml

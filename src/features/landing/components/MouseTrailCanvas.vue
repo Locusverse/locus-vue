@@ -14,12 +14,31 @@ const coordDisplay = ref<HTMLDivElement | null>(null)
 const mouseX = ref(0)
 const mouseY = ref(0)
 const isActive = ref(false)
+const isLight = ref(false)
 
 const trail: TrailPoint[] = []
 const MAX_TRAIL = 80
 const TRAIL_LIFETIME = 100
 
-// Map screen coords to African lat/lng ranges (Lagos → Nairobi corridor)
+function getColors() {
+  if (isLight.value) {
+    return {
+      primary: '0, 106, 45',
+      secondary: '8, 145, 178',
+      primaryHex: '#006a2d',
+      secondaryHex: '#0891b2',
+      coordColor: 'rgba(0, 106, 45,',
+    }
+  }
+  return {
+    primary: '107, 255, 143',
+    secondary: '34, 211, 238',
+    primaryHex: '#6bff8f',
+    secondaryHex: '#22d3ee',
+    coordColor: 'rgba(107, 255, 143,',
+  }
+}
+
 function screenToCoord(x: number, y: number): { lat: string; lng: string } {
   const w = window.innerWidth
   const h = window.innerHeight
@@ -30,6 +49,7 @@ function screenToCoord(x: number, y: number): { lat: string; lng: string } {
 
 let rafId = 0
 let lastAddTime = 0
+let themeObserver: MutationObserver | null = null
 
 function handleMouseMove(e: MouseEvent) {
   mouseX.value = e.clientX
@@ -66,6 +86,7 @@ function draw() {
     return
   }
 
+  const colors = getColors()
   const dpr = window.devicePixelRatio || 1
   const w = window.innerWidth
   const h = window.innerHeight
@@ -94,11 +115,10 @@ function draw() {
     const cy = mouseY.value
     const now = performance.now()
 
-    // Orbital rings — 3 tilted ellipses rotating at different speeds
     const orbits = [
-      { rx: 40, ry: 14, speed: 0.0008, tilt: -0.3, color: '107, 255, 143', alpha: 0.15, width: 1.2 },
-      { rx: 55, ry: 18, speed: -0.0005, tilt: 0.5, color: '34, 211, 238', alpha: 0.1, width: 1 },
-      { rx: 30, ry: 30, speed: 0.001, tilt: 0, color: '107, 255, 143', alpha: 0.08, width: 0.8 },
+      { rx: 40, ry: 14, speed: 0.0008, tilt: -0.3, color: colors.primary, alpha: 0.15, width: 1.2 },
+      { rx: 55, ry: 18, speed: -0.0005, tilt: 0.5, color: colors.secondary, alpha: 0.1, width: 1 },
+      { rx: 30, ry: 30, speed: 0.001, tilt: 0, color: colors.primary, alpha: 0.08, width: 0.8 },
     ]
 
     for (const orbit of orbits) {
@@ -107,14 +127,12 @@ function draw() {
       ctx.translate(cx, cy)
       ctx.rotate(orbit.tilt + angle * 0.3)
 
-      // Draw orbital ellipse
       ctx.beginPath()
       ctx.ellipse(0, 0, orbit.rx, orbit.ry, 0, 0, Math.PI * 2)
       ctx.strokeStyle = `rgba(${orbit.color}, ${orbit.alpha})`
       ctx.lineWidth = orbit.width
       ctx.stroke()
 
-      // Orbiting dot on the ring
       const dotAngle = angle
       const dotX = Math.cos(dotAngle) * orbit.rx
       const dotY = Math.sin(dotAngle) * orbit.ry
@@ -130,23 +148,22 @@ function draw() {
       ctx.restore()
     }
 
-    // Globe core — soft radial glow
+    // Globe core
     const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 28)
-    gradient.addColorStop(0, 'rgba(107, 255, 143, 0.12)')
-    gradient.addColorStop(0.5, 'rgba(107, 255, 143, 0.04)')
-    gradient.addColorStop(1, 'rgba(107, 255, 143, 0)')
+    gradient.addColorStop(0, `rgba(${colors.primary}, 0.12)`)
+    gradient.addColorStop(0.5, `rgba(${colors.primary}, 0.04)`)
+    gradient.addColorStop(1, `rgba(${colors.primary}, 0)`)
     ctx.beginPath()
     ctx.arc(cx, cy, 28, 0, Math.PI * 2)
     ctx.fillStyle = gradient
     ctx.fill()
 
-    // Globe wireframe lines (latitude/longitude arcs)
+    // Globe wireframe
     ctx.save()
     ctx.translate(cx, cy)
     const globeR = 20
     const wobble = Math.sin(now * 0.001) * 0.15
 
-    // Latitude lines
     for (let i = -1; i <= 1; i++) {
       const yOff = i * globeR * 0.45
       const scaleX = Math.sqrt(1 - Math.pow(yOff / globeR, 2))
@@ -154,25 +171,23 @@ function draw() {
 
       ctx.beginPath()
       ctx.ellipse(0, yOff, globeR * scaleX, globeR * 0.15 * scaleX, wobble, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(107, 255, 143, 0.08)'
+      ctx.strokeStyle = `rgba(${colors.primary}, 0.08)`
       ctx.lineWidth = 0.6
       ctx.stroke()
     }
 
-    // Longitude arcs
     for (let i = 0; i < 3; i++) {
       const arcAngle = (i / 3) * Math.PI + now * 0.0003
       ctx.beginPath()
       ctx.ellipse(0, 0, globeR * Math.abs(Math.cos(arcAngle)), globeR, 0, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(107, 255, 143, 0.06)'
+      ctx.strokeStyle = `rgba(${colors.primary}, 0.06)`
       ctx.lineWidth = 0.6
       ctx.stroke()
     }
 
-    // Equator ring (brighter)
     ctx.beginPath()
     ctx.ellipse(0, 0, globeR, globeR * 0.2, wobble, 0, Math.PI * 2)
-    ctx.strokeStyle = 'rgba(107, 255, 143, 0.12)'
+    ctx.strokeStyle = `rgba(${colors.primary}, 0.12)`
     ctx.lineWidth = 0.8
     ctx.stroke()
 
@@ -181,15 +196,15 @@ function draw() {
     // Center dot
     ctx.beginPath()
     ctx.arc(cx, cy, 3, 0, Math.PI * 2)
-    ctx.fillStyle = 'rgba(107, 255, 143, 0.5)'
-    ctx.shadowColor = '#6bff8f'
+    ctx.fillStyle = `rgba(${colors.primary}, 0.5)`
+    ctx.shadowColor = colors.primaryHex
     ctx.shadowBlur = 10
     ctx.fill()
     ctx.shadowBlur = 0
 
     ctx.beginPath()
     ctx.arc(cx, cy, 1.5, 0, Math.PI * 2)
-    ctx.fillStyle = '#6bff8f'
+    ctx.fillStyle = colors.primaryHex
     ctx.fill()
 
     // Pulsing outer ring
@@ -198,36 +213,33 @@ function draw() {
     const pulseAlpha = (1 - pulsePhase) * 0.1
     ctx.beginPath()
     ctx.arc(cx, cy, pulseR, 0, Math.PI * 2)
-    ctx.strokeStyle = `rgba(107, 255, 143, ${pulseAlpha})`
+    ctx.strokeStyle = `rgba(${colors.primary}, ${pulseAlpha})`
     ctx.lineWidth = 0.8
     ctx.stroke()
   }
 
-  // --- Trail: fading orbital breadcrumbs ---
+  // --- Trail breadcrumbs ---
   for (let i = 0; i < trail.length; i++) {
     const p = trail[i]
     const life = 1 - p.age / TRAIL_LIFETIME
     const alpha = life * 0.3
 
-    // Fading ring (like a sonar/radar mark)
     const ringExpand = (1 - life) * 8
     ctx.beginPath()
     ctx.arc(p.x, p.y, 3 + ringExpand, 0, Math.PI * 2)
-    ctx.strokeStyle = `rgba(107, 255, 143, ${alpha * 0.3})`
+    ctx.strokeStyle = `rgba(${colors.primary}, ${alpha * 0.3})`
     ctx.lineWidth = 0.5
     ctx.stroke()
 
-    // Center dot
     ctx.beginPath()
     ctx.arc(p.x, p.y, 1.5 * life, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(107, 255, 143, ${alpha})`
+    ctx.fillStyle = `rgba(${colors.primary}, ${alpha})`
     ctx.fill()
 
-    // Coordinate labels on sparse points
     if (i % 15 === 0 && life > 0.4) {
       ctx.font = '8px Manrope, monospace'
-      ctx.fillStyle = `rgba(107, 255, 143, ${alpha * 0.5})`
-      ctx.fillText(`${p.lat}°N  ${p.lng}°E`, p.x + 10, p.y + 3)
+      ctx.fillStyle = `rgba(${colors.primary}, ${alpha * 0.5})`
+      ctx.fillText(`${p.lat}\u00b0N  ${p.lng}\u00b0E`, p.x + 10, p.y + 3)
     }
   }
 
@@ -239,13 +251,22 @@ function draw() {
   rafId = requestAnimationFrame(draw)
 }
 
+function checkTheme() {
+  isLight.value = document.documentElement.classList.contains('light')
+}
+
 onMounted(() => {
+  checkTheme()
+  themeObserver = new MutationObserver(checkTheme)
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] })
+
   window.addEventListener('mousemove', handleMouseMove, { passive: true })
   window.addEventListener('mouseleave', handleMouseLeave)
   rafId = requestAnimationFrame(draw)
 })
 
 onUnmounted(() => {
+  themeObserver?.disconnect()
   window.removeEventListener('mousemove', handleMouseMove)
   window.removeEventListener('mouseleave', handleMouseLeave)
   cancelAnimationFrame(rafId)
@@ -263,12 +284,18 @@ onUnmounted(() => {
     class="fixed top-0 left-0 z-50 pointer-events-none transition-opacity duration-300"
     :class="isActive ? 'opacity-100' : 'opacity-0'"
   >
-    <div class="glass-panel rounded-lg px-2.5 py-1.5 border border-emerald-500/10">
-      <div class="text-[9px] font-mono text-emerald-400/70 leading-tight tracking-wider">
-        {{ screenToCoord(mouseX, mouseY).lat }}°N
+    <div class="glass-panel rounded-lg px-2.5 py-1.5" :class="isLight ? 'border-emerald-600/10' : 'border-emerald-500/10'">
+      <div
+        class="text-[9px] font-mono leading-tight tracking-wider"
+        :class="isLight ? 'text-emerald-700/70' : 'text-emerald-400/70'"
+      >
+        {{ screenToCoord(mouseX, mouseY).lat }}&deg;N
       </div>
-      <div class="text-[9px] font-mono text-emerald-400/50 leading-tight tracking-wider">
-        {{ screenToCoord(mouseX, mouseY).lng }}°E
+      <div
+        class="text-[9px] font-mono leading-tight tracking-wider"
+        :class="isLight ? 'text-emerald-700/50' : 'text-emerald-400/50'"
+      >
+        {{ screenToCoord(mouseX, mouseY).lng }}&deg;E
       </div>
     </div>
   </div>

@@ -1,0 +1,19 @@
+{
+  "name": "Locusverse",
+  "short_name": "Locusverse",
+  "description": "Delivery intelligence platform built for Africa's fastest-growing businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070e1d",
+  "theme_color": "#070e1d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/locus.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "logistics", "productivity"]
+}

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useScrollReveal } from '@/shared/composables/useScrollReveal'
+import { useTheme } from '@/shared/composables/useTheme'
 
+const { currentTheme } = useTheme()
 const { target, isVisible } = useScrollReveal(0.15)
 
 const benefits = [
@@ -11,21 +13,28 @@ const benefits = [
 </script>
 
 <template>
-  <section ref="target" class="relative py-28 lg:py-36 overflow-hidden">
+  <section ref="target" class="relative py-20 sm:py-28 lg:py-36 overflow-hidden">
     <!-- Ambient glow -->
     <div
-      class="absolute -left-40 top-1/3 w-[500px] h-[500px] rounded-full bg-cyan-500/5 blur-[160px] pointer-events-none"
+      class="absolute -left-40 top-1/3 w-[500px] h-[500px] rounded-full blur-[160px] pointer-events-none"
+      :class="currentTheme === 'dark' ? 'bg-cyan-500/5' : 'bg-cyan-500/3'"
     />
 
-    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
         <!-- Visual -->
         <div
           class="relative transition-all duration-1000"
           :class="isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'"
         >
-          <div class="glass-panel rounded-2xl p-[2px] border border-white/5">
-            <div class="bg-zinc-900/90 rounded-2xl overflow-hidden relative h-72 sm:h-80 lg:h-96">
+          <div
+            class="glass-panel rounded-2xl p-[2px] border"
+            :class="currentTheme === 'dark' ? 'border-white/5' : 'border-black/5'"
+          >
+            <div
+              class="rounded-2xl overflow-hidden relative h-64 sm:h-80 lg:h-96"
+              :class="currentTheme === 'dark' ? 'bg-zinc-900/90' : 'bg-white/95'"
+            >
               <div class="absolute inset-0 hero-grid-bg opacity-40" />
 
               <svg
@@ -47,21 +56,19 @@ const benefits = [
                 <path
                   d="M40 350 C 100 280, 150 180, 220 200 S 340 120, 460 80"
                   fill="none"
-                  stroke="#22d3ee"
+                  :stroke="currentTheme === 'dark' ? '#22d3ee' : '#0891b2'"
                   stroke-width="2.5"
                   class="route-draw-loop"
                   opacity="0.7"
                 />
 
                 <!-- Waypoints -->
-                <circle cx="40" cy="350" r="5" fill="#6bff8f" />
-                <circle cx="220" cy="200" r="4" fill="#22d3ee" class="animate-dot-pulse" />
+                <circle cx="40" cy="350" r="5" :fill="currentTheme === 'dark' ? '#6bff8f' : '#059669'" />
+                <circle cx="220" cy="200" r="4" :fill="currentTheme === 'dark' ? '#22d3ee' : '#0891b2'" class="animate-dot-pulse" />
                 <circle
-                  cx="220"
-                  cy="200"
-                  r="10"
+                  cx="220" cy="200" r="10"
                   fill="none"
-                  stroke="#22d3ee"
+                  :stroke="currentTheme === 'dark' ? '#22d3ee' : '#0891b2'"
                   stroke-width="1"
                   class="animate-ping-slow"
                   opacity="0.3"
@@ -71,15 +78,19 @@ const benefits = [
               </svg>
 
               <!-- Labels -->
-              <div
-                class="absolute top-4 left-4 glass-panel rounded-lg px-3 py-2 text-[10px] font-medium"
-              >
+              <div class="absolute top-4 left-4 glass-panel rounded-lg px-3 py-2 text-[10px] font-medium">
                 <span class="text-red-400/50 line-through mr-2">45 min</span>
-                <span class="text-cyan-400 font-bold">28 min</span>
+                <span
+                  class="font-bold"
+                  :class="currentTheme === 'dark' ? 'text-cyan-400' : 'text-cyan-600'"
+                >
+                  28 min
+                </span>
               </div>
 
               <div
-                class="absolute bottom-4 right-4 glass-panel rounded-lg px-3 py-2 text-[10px] text-emerald-400 font-bold"
+                class="absolute bottom-4 right-4 glass-panel rounded-lg px-3 py-2 text-[10px] font-bold"
+                :class="currentTheme === 'dark' ? 'text-emerald-400' : 'text-emerald-600'"
               >
                 -38% fuel saved
               </div>
@@ -92,21 +103,30 @@ const benefits = [
           class="transition-all duration-1000 delay-200"
           :class="isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'"
         >
-          <span class="inline-block text-xs font-bold tracking-[0.2em] uppercase text-cyan-400 mb-4">
+          <span
+            class="inline-block text-xs font-bold tracking-[0.2em] uppercase mb-4"
+            :class="currentTheme === 'dark' ? 'text-cyan-400' : 'text-cyan-600'"
+          >
             Route Intelligence
           </span>
 
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tighter text-white leading-[0.95]">
+          <h2
+            class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tighter leading-[0.95]"
+            :class="currentTheme === 'dark' ? 'text-white' : 'text-zinc-900'"
+          >
             Smarter Routes,<br />
             <span class="text-gradient">Faster Deliveries.</span>
           </h2>
 
-          <p class="mt-4 text-zinc-500 text-base leading-relaxed max-w-md">
+          <p
+            class="mt-4 text-sm sm:text-base leading-relaxed max-w-md"
+            :class="currentTheme === 'dark' ? 'text-zinc-500' : 'text-zinc-500'"
+          >
             Our AI engine processes real-time traffic, weather, and road data to find the optimal path
             for every delivery in your fleet.
           </p>
 
-          <div class="mt-8 space-y-4">
+          <div class="mt-6 sm:mt-8 space-y-4">
             <div
               v-for="(benefit, i) in benefits"
               :key="benefit.text"
@@ -115,13 +135,22 @@ const benefits = [
               :style="{ transitionDelay: `${400 + i * 100}ms` }"
             >
               <div
-                class="w-8 h-8 rounded-lg bg-cyan-500/10 flex items-center justify-center shrink-0"
+                class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                :class="currentTheme === 'dark' ? 'bg-cyan-500/10' : 'bg-cyan-500/8'"
               >
-                <span class="material-symbols-outlined text-base text-cyan-400">
+                <span
+                  class="material-symbols-outlined text-base"
+                  :class="currentTheme === 'dark' ? 'text-cyan-400' : 'text-cyan-600'"
+                >
                   {{ benefit.icon }}
                 </span>
               </div>
-              <span class="text-sm text-zinc-400">{{ benefit.text }}</span>
+              <span
+                class="text-sm"
+                :class="currentTheme === 'dark' ? 'text-zinc-400' : 'text-zinc-500'"
+              >
+                {{ benefit.text }}
+              </span>
             </div>
           </div>
         </div>

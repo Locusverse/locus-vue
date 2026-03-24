@@ -27,8 +27,6 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
-    "@prerenderer/renderer-puppeteer": "^1.2.4",
-    "@prerenderer/rollup-plugin": "^0.3.12",
     "@tsconfig/node24": "^24.0.4",
     "@types/jsdom": "^28.0.0",
     "@types/node": "^24.12.0",

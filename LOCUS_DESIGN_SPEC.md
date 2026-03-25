@@ -8,7 +8,7 @@
 
 - **Name:** Locusverse (short: Locus)
 - **Tagline:** "Locate, Deliver, Track"
-- **Description:** Locus is a delivery operations platform for businesses and drivers in Africa. It combines real-time GPS tracking, trip recording, route optimization, proof-of-delivery, live customer tracking links, voice-powered transaction logging, and a dispatcher dashboard — all in one PWA.
+- **Description:** Locus is a delivery operations platform for businesses and drivers in Africa. It combines real-time GPS tracking, trip recording, route optimization, proof-of-delivery, live customer tracking links, and a dispatcher dashboard — all in one PWA.
 - **Logo:** come up wth something unique revoling around path movemrnt.
 - **Primary Font:** Manrope (geometric sans-serif)
 - **Color Palette:**
@@ -27,7 +27,7 @@
 
 | Persona | Description |
 |---|---|
-| **Driver / Rider** | Delivery personnel using the mobile app to navigate, record trips, capture proof-of-delivery, and log transactions by voice |
+| **Driver / Rider** | Delivery personnel using the mobile app to navigate, record trips, and capture proof-of-delivery |
 | **Dispatcher** | Operations manager at a logistics company assigning deliveries, monitoring drivers in real time, reviewing completed trips |
 | **Business Owner** | Small-to-medium business owner viewing delivery analytics, managing drivers, controlling costs |
 | **Customer** | End recipient of a delivery who receives a live tracking link and proof-of-delivery receipt |
@@ -46,7 +46,7 @@ Convert visitors into signups. Show what Locus does, who it's for, and why it's 
 - **Overlay content (centered):**
   - Locus logo (green rounded square with white "L")
   - Headline: **"Delivery operations, simplified."**
-  - Subheadline: "Real-time tracking. Proof of delivery. Route optimization. Voice-powered transaction logging. One platform for drivers, dispatchers, and customers."
+  - Subheadline: "Real-time tracking. Proof of delivery. Route optimization. One platform for drivers, dispatchers, and customers."
   - Two CTA buttons:
     - **"Start Free"** (solid green, large) → goes to /register
     - **"Watch Demo"** (outline white) → scrolls to demo video or opens modal
@@ -58,7 +58,6 @@ Convert visitors into signups. Show what Locus does, who it's for, and why it's 
   2. **Proof of Delivery** — "GPS-stamped photos and e-signatures"
   3. **Route Optimization** — "Fastest route through 20+ stops"
   4. **Customer Links** — "Share a live tracking page, no app install"
-  5. **Voice Logging** — "Record transactions by speaking — in Yoruba, Igbo, Hausa, or English"
 
 #### 1.3 "How It Works" — 3-Step Visual
 Three columns (or stacked on mobile) with illustrations:
@@ -84,17 +83,13 @@ Three columns (or stacked on mobile) with illustrations:
 - Right: mockup of a route with numbered stops reordered on a map, showing "Before: 47km" crossed out and "After: 31km" in green
 - Left: text — "Input up to 20 stops. Locus returns the fastest route. Drivers save fuel and time. End-of-day summary: 'You saved 12km and 40 minutes today.'"
 
-**Section E: Voice Transaction Logging**
-- Left: mockup of mobile app with audio waveform and transcribed transaction
-- Right: text — "Speak your transactions in Yoruba, Igbo, Hausa, or English. Locus transcribes, categorizes, and tracks credits and debts automatically. No typing needed."
-
 #### 1.5 Pricing Section
 - **Heading:** "Simple pricing. Pay as you grow."
 - Three pricing cards:
 
 | Plan | Price | Includes |
 |---|---|---|
-| **Starter** | Free | 1 driver, 50 deliveries/month, basic tracking, voice logging |
+| **Starter** | Free | 1 driver, 50 deliveries/month, basic tracking |
 | **Business** | ₦25,000/month | Up to 10 drivers, unlimited deliveries, POD, customer links, route optimization, dispatcher dashboard |
 | **Enterprise** | Custom | Unlimited drivers, API access, custom branding, SLA, dedicated support |
 
@@ -104,7 +99,7 @@ Three columns (or stacked on mobile) with illustrations:
 - 2-3 quote cards from delivery businesses:
   - "We replaced three different apps with Locus." — Courier company, Lagos
   - "The customer tracking link alone reduced our 'where is my delivery' calls by 80%." — E-commerce store, Accra
-  - "My riders log transactions by voice in Yoruba. No training needed." — Food delivery, Ibadan
+  - "Route optimization alone saves our riders 30 minutes daily." — Food delivery, Ibadan
 
 #### 1.7 Footer
 - Locus logo + tagline
@@ -156,8 +151,6 @@ Three columns (or stacked on mobile) with illustrations:
 - **Search bar** (floating below top bar): tap to expand into full search with location suggestions and weather preview for each result
 - **Bottom area:**
   - **Trip button** (large, centered): shows "Start Trip" when idle. When active, shows trip stats (duration, distance, speed) and Pause / End buttons
-  - **Voice record button** (circular microphone icon): tap to record a voice transaction. Pulses red while recording. Shows processing state.
-  - **Language selector** (small pill): current language displayed (EN / YO / IG / HA), tap to switch
 
 ### 3.2 Active Trip View
 - Map follows driver location with smooth animation
@@ -201,33 +194,18 @@ Three columns (or stacked on mobile) with illustrations:
     - Map preview showing optimized route
     - **"Start Route"** button → begins navigation with turn-by-turn stops
 
-### 3.5 Transaction Feed / Voice Log
-- Accessed via sidebar or bottom tab
-- **Chat-style layout:**
-  - User messages (right-aligned, green bubbles): transcribed voice input
-  - System messages (left-aligned, gray bubbles): confirmed transaction details
-  - Each transaction card shows: customer name, amount (₦), type (Credit in green / Debt in red), timestamp
-- **Top filter bar:**
-  - "All" / "Credits" / "Debts" pills
-  - Date picker
-- **Summary card** at top:
-  - Total Credits: ₦XXX,XXX (green)
-  - Total Debts: ₦XXX,XXX (red)
-  - Net: ₦XXX,XXX
-
-### 3.6 Sidebar Menu (slides in from left)
+### 3.5 Sidebar Menu (slides in from left)
 - User avatar + name + account type
 - Menu items:
   - **Dashboard** (home/map)
   - **My Trips** (trip history list)
-  - **Transactions** (voice-logged transactions)
   - **Deliveries** (assigned deliveries from dispatcher)
   - **Earnings** (delivery earnings summary)
   - **Settings** (profile, language, notifications)
   - **Help & Support**
   - **Log Out**
 
-### 3.7 Trip History
+### 3.6 Trip History
 - List of past trips, sorted by date (newest first)
 - Each trip card shows:
   - Date and time
@@ -235,9 +213,9 @@ Three columns (or stacked on mobile) with illustrations:
   - Distance and duration
   - Number of stops / deliveries
   - Status: Completed (green) / Cancelled (gray)
-- Tap a trip → detailed view with map replay of the route, all POD receipts, and transaction log
+- Tap a trip → detailed view with map replay of the route and all POD receipts
 
-### 3.8 Delivery Assignment View
+### 3.7 Delivery Assignment View
 - Shows deliveries assigned by dispatcher
 - Each delivery card:
   - Recipient name and address
@@ -301,7 +279,6 @@ Three columns (or stacked on mobile) with illustrations:
     - **Proof of Delivery**
     - **Analytics**
     - **Customer Links**
-    - **Transactions**
     - **Settings**
   - Bottom: user avatar, name, "Log Out"
 - **Main content area** (right, full remaining width)
@@ -416,13 +393,7 @@ Three columns (or stacked on mobile) with illustrations:
   - Toggle "Powered by Locus" footer (Enterprise only to remove)
 - **"Generate Link" button** → for any active delivery
 
-### 5.9 Transaction Log (Voice-Logged)
-- Same transaction feed as driver app but aggregated across all drivers
-- Filter by driver, date, type (credit/debt)
-- Summary totals at top
-- Export to CSV
-
-### 5.10 Settings
+### 5.9 Settings
 - **Business Profile:** name, logo, address, contact info
 - **Team Management:** invite/remove team members, set roles (Admin, Dispatcher, Viewer)
 - **Billing:** current plan, usage, upgrade options, payment method
@@ -485,13 +456,6 @@ Three columns (or stacked on mobile) with illustrations:
 - Double tap → zoom in
 - 3D tilt with two-finger drag up/down
 
-### Voice Recording Flow
-1. Tap microphone button → button pulses red, waveform animation appears
-2. Speak transaction in any supported language
-3. Tap again to stop → button shows spinning loader
-4. System responds with transcribed + categorized transaction
-5. Transaction appears in feed
-
 ### Delivery Assignment Flow (Dispatcher)
 1. Click "New Delivery" → modal opens
 2. Type recipient address → autocomplete suggestions appear
@@ -514,8 +478,7 @@ Three columns (or stacked on mobile) with illustrations:
 - Welcome screen: "Welcome to Locus! Let's get you set up."
 - Step 1: "Allow location access" (with explanation of why)
 - Step 2: "Allow notifications" (with explanation)
-- Step 3: "Try recording a transaction" (guided mic tap)
-- Step 4: "You're ready! Start your first trip."
+- Step 3: "You're ready! Start your first trip."
 
 ### First-Time Dispatcher
 - Welcome screen: "Welcome to your delivery command center."
@@ -542,9 +505,8 @@ Three columns (or stacked on mobile) with illustrations:
   - Android: native "Install" button
 - **Standalone mode:** no browser chrome when launched from home screen
 - **Splash screen:** green background with white Locus logo
-- **Offline support:** cached map tiles, queued transactions sync when back online
+- **Offline support:** cached map tiles, queued data syncs when back online
 - **App shortcuts** (long-press app icon):
-  - "New Recording" → opens voice transaction
   - "Start Trip" → starts GPS tracking
 
 ---
@@ -587,21 +549,20 @@ Three columns (or stacked on mobile) with illustrations:
 | 6 | Route Optimization (multi-stop) | Mobile | Driver |
 | 7 | Proof-of-Delivery Camera | Mobile | Driver |
 | 8 | Proof-of-Delivery Signature | Mobile | Driver |
-| 9 | Transaction Feed (Voice Log) | Mobile | Driver |
-| 10 | Delivery Assignment List | Mobile | Driver |
-| 11 | Trip History | Mobile | Driver |
-| 12 | Sidebar Menu | Mobile | Driver |
-| 13 | Customer Live Tracking Page | Mobile | Public |
-| 14 | Customer Delivery Completed | Mobile | Public |
-| 15 | Dispatcher Live Map | Desktop | Business |
-| 16 | Dispatcher Delivery Management | Desktop | Business |
-| 17 | Dispatcher New Delivery Modal | Desktop | Business |
-| 18 | Dispatcher Driver Management | Desktop | Business |
-| 19 | Dispatcher Route Planner | Desktop | Business |
-| 20 | Dispatcher POD Log | Desktop | Business |
-| 21 | Dispatcher Analytics | Desktop | Business |
-| 22 | Dispatcher Customer Links | Desktop | Business |
-| 23 | Dispatcher Settings | Desktop | Business |
-| 24 | Mobile Dispatcher (responsive) | Mobile | Business |
-| 25 | Onboarding — Driver | Mobile | Driver |
-| 26 | Onboarding — Dispatcher | Desktop | Business |
+| 9 | Delivery Assignment List | Mobile | Driver |
+| 10 | Trip History | Mobile | Driver |
+| 11 | Sidebar Menu | Mobile | Driver |
+| 12 | Customer Live Tracking Page | Mobile | Public |
+| 13 | Customer Delivery Completed | Mobile | Public |
+| 14 | Dispatcher Live Map | Desktop | Business |
+| 15 | Dispatcher Delivery Management | Desktop | Business |
+| 16 | Dispatcher New Delivery Modal | Desktop | Business |
+| 17 | Dispatcher Driver Management | Desktop | Business |
+| 18 | Dispatcher Route Planner | Desktop | Business |
+| 19 | Dispatcher POD Log | Desktop | Business |
+| 20 | Dispatcher Analytics | Desktop | Business |
+| 21 | Dispatcher Customer Links | Desktop | Business |
+| 22 | Dispatcher Settings | Desktop | Business |
+| 23 | Mobile Dispatcher (responsive) | Mobile | Business |
+| 24 | Onboarding — Driver | Mobile | Driver |
+| 25 | Onboarding — Dispatcher | Desktop | Business |

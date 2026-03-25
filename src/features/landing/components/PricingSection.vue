@@ -227,8 +227,9 @@ function displayPrice(tier: PricingTier): string {
           </div>
 
           <!-- CTA Button -->
-          <button
-            class="w-full py-3.5 rounded-full font-bold text-sm transition-all duration-300 active:scale-95 mb-6"
+          <router-link
+            :to="tier.monthlyPrice === -1 ? '#' : { name: 'auth:register' }"
+            class="w-full py-3.5 rounded-full font-bold text-sm transition-all duration-300 active:scale-95 mb-6 text-center block"
             :class="
               tier.highlighted
                 ? currentTheme === 'dark'
@@ -240,7 +241,7 @@ function displayPrice(tier: PricingTier): string {
             "
           >
             {{ tier.cta }}
-          </button>
+          </router-link>
 
           <!-- Features List -->
           <ul class="space-y-3 flex-1">

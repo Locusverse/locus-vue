@@ -72,8 +72,9 @@ onMounted(() => {
         class="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center transition-all duration-1000 delay-[400ms]"
         :class="entered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'"
       >
-        <button
-          class="group px-8 py-4 font-extrabold rounded-full active:scale-95 transition-all duration-300"
+        <router-link
+          :to="{ name: 'auth:register' }"
+          class="group px-8 py-4 font-extrabold rounded-full active:scale-95 transition-all duration-300 inline-block"
           :class="
             currentTheme === 'dark'
               ? 'bg-white text-[#070e1d] hover:shadow-lg hover:shadow-emerald-500/20'
@@ -84,7 +85,7 @@ onMounted(() => {
           <span
             class="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1"
           >&rarr;</span>
-        </button>
+        </router-link>
         <button
           class="px-8 py-4 glass-panel border font-bold rounded-full active:scale-95 transition-all duration-300"
           :class="

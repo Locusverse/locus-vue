@@ -46,8 +46,9 @@ const { target, isVisible } = useScrollReveal(0.2)
       </p>
 
       <div class="mt-8 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-        <button
-          class="group px-8 sm:px-10 py-4 font-extrabold rounded-full active:scale-95 transition-all duration-300 text-base sm:text-lg"
+        <router-link
+          :to="{ name: 'auth:register' }"
+          class="group px-8 sm:px-10 py-4 font-extrabold rounded-full active:scale-95 transition-all duration-300 text-base sm:text-lg inline-block"
           :class="
             currentTheme === 'dark'
               ? 'bg-white text-[#070e1d] hover:shadow-lg hover:shadow-emerald-500/20'
@@ -58,7 +59,7 @@ const { target, isVisible } = useScrollReveal(0.2)
           <span
             class="inline-block ml-1 transition-transform duration-300 group-hover:translate-x-1"
           >&rarr;</span>
-        </button>
+        </router-link>
         <button
           class="px-8 sm:px-10 py-4 glass-panel border font-bold rounded-full active:scale-95 transition-all duration-300 text-base sm:text-lg"
           :class="

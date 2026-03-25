@@ -74,13 +74,15 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
       <div class="flex items-center gap-2 sm:gap-3">
         <ThemeToggle />
 
-        <button
+        <router-link
+          :to="{ name: 'auth:login' }"
           class="hidden sm:block px-4 py-2 text-sm font-medium transition-all duration-300"
           :class="currentTheme === 'dark' ? 'text-zinc-400 hover:text-white' : 'text-zinc-500 hover:text-zinc-900'"
         >
           Log in
-        </button>
-        <button
+        </router-link>
+        <router-link
+          :to="{ name: 'auth:register' }"
           class="hidden sm:block px-5 py-2.5 text-sm font-bold rounded-full active:scale-95 transition-all duration-200"
           :class="
             currentTheme === 'dark'
@@ -89,7 +91,7 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
           "
         >
           Get Started
-        </button>
+        </router-link>
 
         <!-- Mobile hamburger -->
         <button
@@ -143,22 +145,26 @@ onUnmounted(() => window.removeEventListener('scroll', handleScroll))
           </a>
 
           <div class="flex flex-col gap-3 mt-2 pt-4 border-t" :class="currentTheme === 'dark' ? 'border-white/5' : 'border-black/5'">
-            <button
-              class="w-full py-3 text-sm font-medium rounded-full transition-all"
+            <router-link
+              :to="{ name: 'auth:login' }"
+              class="w-full py-3 text-sm font-medium rounded-full transition-all text-center block"
               :class="currentTheme === 'dark' ? 'text-zinc-300 hover:text-white' : 'text-zinc-600 hover:text-zinc-900'"
+              @click="closeMobile"
             >
               Log in
-            </button>
-            <button
-              class="w-full py-3 text-sm font-bold rounded-full active:scale-95 transition-all"
+            </router-link>
+            <router-link
+              :to="{ name: 'auth:register' }"
+              class="w-full py-3 text-sm font-bold rounded-full active:scale-95 transition-all text-center block"
               :class="
                 currentTheme === 'dark'
                   ? 'bg-white text-[#070e1d]'
                   : 'bg-[#1a1a2e] text-white'
               "
+              @click="closeMobile"
             >
               Get Started
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
